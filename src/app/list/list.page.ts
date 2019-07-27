@@ -1,39 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { NavigationExtras, Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-list',
   templateUrl: 'list.page.html',
   styleUrls: ['list.page.scss']
 })
-export class ListPage implements OnInit {
-  private selectedItem: any;
-  private icons = [
-    'flask',
-    'wifi',
-    'beer',
-    'football',
-    'basketball',
-    'paper-plane',
-    'american-football',
-    'boat',
-    'bluetooth',
-    'build'
-  ];
-  public items: Array<{ title: string; note: string; icon: string }> = [];
-  constructor() {
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
-  }
+export class ListPage {
+  public list
+  // private configUrl = 'https://mbaapi.herokuapp.com/';
+  private configUrl = 'http://localhost/api/web/'
+  loading: HTMLIonLoadingElement;
 
-  ngOnInit() {
+
+  constructor(
+    public http: HttpClient,
+    public router: Router,
+    public loadingController: LoadingController
+  ) { }
+  ionViewWillEnter() {
+    this.presentLoading()
   }
-  // add back when alpha.4 is out
-  // navigate(item) {
-  //   this.router.navigate(['/list', JSON.stringify(item)]);
-  // }
+  update(user) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        user: JSON.stringify(user)
+      }
+    };
+    this.router.navigate(['user'], navigationExtras);
+  }
+  async presentLoading() {
+
+    this.loading = await this.loadingController.create({
+      message: 'Carregando...',
+    });
+    await this.loading.present();
+
+    this.http.get(`${this.configUrl}users`, { responseType: 'json', observe: 'response' }).subscribe(
+      (response) => {
+        this.list = response.body
+      },
+      (error) => {
+        alert('Não foi possível buscar usuários')
+      })
+    this.loading.dismiss();
+
+  }
 }

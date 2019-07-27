@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Usuário</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <div class="ion-padding">
+      <ion-button expand="block" *ngIf="form._id" color="danger" (click)="delete(form._id)" class="ion-no-margin">Excluir</ion-button>
+      <ion-button expand="block"  color="secondary" (click)="resetForm()" class="ion-no-margin">Limpar</ion-button>
+    </div>
+    <form (ngSubmit)="submitForm()">
+      <ion-item>
+        <ion-label position="stacked">E-mail<ion-text color="danger">*</ion-text>
+        </ion-label>
+        <ion-input required type="email" [(ngModel)]="form.email" name="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Nome<ion-text color="danger">*</ion-text>
+        </ion-label>
+        <ion-input required type="text" [(ngModel)]="form.first_name" name="first_name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Sobrenome<ion-text color="danger">*</ion-text>
+        </ion-label>
+        <ion-input required type="text" [(ngModel)]="form.last_name" name="last_name"></ion-input>
+      </ion-item>
+      <div class="ion-padding">
+        <ion-button expand="block" type="submit" class="ion-no-margin">Enviar</ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>
