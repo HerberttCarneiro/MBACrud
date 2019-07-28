@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 })
 export class UserPage {
   private configUrl = 'https://mbaapi.herokuapp.com/'
+
   public initialState = {
     _id: null,
     email: null,
@@ -22,6 +23,7 @@ export class UserPage {
       'Content-Type': "application/json"
     })
   };
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -36,15 +38,17 @@ export class UserPage {
   }
 
   submitForm() {
-    if (this.form.hasOwnProperty('_id')) {
+    if (this.form._id != null) {
       this.updateUser()
     } else {
       this.createUser()
     }
   }
+
   resetForm() {
     this.form = this.initialState;
   }
+
   updateUser() {
     this.http.put(`${this.configUrl}users`, this.form, this.httpOptions).subscribe(
       (response) => {
@@ -56,9 +60,10 @@ export class UserPage {
         }
       },
       (error) => {
-        console.log(error);
+        alert('Não foi possível salvar usuário')
       })
   }
+
   createUser() {
     this.http.post(`${this.configUrl}users`, this.form, this.httpOptions).subscribe(
       (response) => {
@@ -70,16 +75,17 @@ export class UserPage {
         }
       },
       (error) => {
-        console.log(error);
+        alert('Não foi possível salvar usuário')
       })
   }
+
   delete(id) {
     this.http.delete(`${this.configUrl}users/${id}`, { responseType: 'json', observe: 'response' }).subscribe(
       (response) => {
         this.location.back();
       },
       (error) => {
-        alert('Não foi possível buscar usuários')
+        alert('Não foi possível deletar usuário')
       })
   }
 }

@@ -11,17 +11,18 @@ import { LoadingController } from '@ionic/angular';
 export class ListPage {
   public list
   private configUrl = 'https://mbaapi.herokuapp.com/';
-  loading: HTMLIonLoadingElement;
-
+  loading: any;
 
   constructor(
     public http: HttpClient,
     public router: Router,
     public loadingController: LoadingController
   ) { }
+
   ionViewWillEnter() {
     this.presentLoading()
   }
+
   update(user) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
@@ -30,6 +31,7 @@ export class ListPage {
     };
     this.router.navigate(['user'], navigationExtras);
   }
+
   async presentLoading() {
 
     this.loading = await this.loadingController.create({
@@ -40,11 +42,11 @@ export class ListPage {
     this.http.get(`${this.configUrl}users`, { responseType: 'json', observe: 'response' }).subscribe(
       (response) => {
         this.list = response.body
+        this.loading.dismiss();
       },
       (error) => {
         alert('Não foi possível buscar usuários')
+        this.loading.dismiss();
       })
-    this.loading.dismiss();
-
   }
 }
