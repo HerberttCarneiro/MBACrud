@@ -9,9 +9,14 @@ import { Location } from '@angular/common';
   styleUrls: ['./user.page.scss'],
 })
 export class UserPage {
-  // private configUrl = 'https://mbaapi.herokuapp.com/'
-  private configUrl = 'http://localhost/api/web/'
-  public form = {}
+  private configUrl = 'https://mbaapi.herokuapp.com/'
+  public initialState = {
+    _id: null,
+    email: null,
+    first_name: null,
+    last_name: null
+  }
+  public form = this.initialState
   public httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': "application/json"
@@ -38,7 +43,7 @@ export class UserPage {
     }
   }
   resetForm() {
-    this.form = {};
+    this.form = this.initialState;
   }
   updateUser() {
     this.http.put(`${this.configUrl}users`, this.form, this.httpOptions).subscribe(
