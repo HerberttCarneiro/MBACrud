@@ -10,8 +10,7 @@ import { LoadingController } from '@ionic/angular';
 })
 export class ListPage {
   public list
-  // private configUrl = 'https://mbaapi.herokuapp.com/';
-  private configUrl = 'http://localhost/api/web/'
+  private configUrl = 'https://mbaapi.herokuapp.com/';
   loading: HTMLIonLoadingElement;
 
 
