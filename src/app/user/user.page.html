@@ -13,7 +13,6 @@
     <div class="ion-padding">
       <ion-button expand="block" *ngIf="form._id" color="danger" (click)="delete(form._id)" class="ion-no-margin">
         Excluir</ion-button>
-      <ion-button expand="block" color="secondary" (click)="resetForm()" class="ion-no-margin">Limpar</ion-button>
     </div>
     <form (ngSubmit)="submitForm()">
       <ion-item>

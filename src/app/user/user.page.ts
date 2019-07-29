@@ -45,17 +45,12 @@ export class UserPage {
     }
   }
 
-  resetForm() {
-    this.form = this.initialState;
-  }
-
   updateUser() {
     this.http.put(`${this.configUrl}users`, this.form, this.httpOptions).subscribe(
       (response) => {
         if (response.hasOwnProperty('error')) {
           alert('Não foi possível salvar')
         } else {
-          this.resetForm()
           this.location.back();
         }
       },
@@ -70,7 +65,6 @@ export class UserPage {
         if (response.hasOwnProperty('error')) {
           alert('Não foi possível salvar')
         } else {
-          this.resetForm()
           this.router.navigate(['list']);
         }
       },
